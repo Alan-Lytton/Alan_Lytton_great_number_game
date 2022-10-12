@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <style>
+    {% if session['result'] == 'High' %}
+        .red-back{
+            background-color: red;
+            height: 150px;
+            width: 150px;
+        }
+        .guess-high{
+            color: white;
+        }
+    {% elif session['result'] == 'Low' %}
+        .blue-back{
+            background-color: blue;
+            height: 150px;
+            width: 150px;
+        }
+        .guess-low{
+            color: white;
+        }
+    {% elif session['result'] == 'Match' %}
+        .green-back{
+            background-color: green;
+            height: 150px;
+            width: 150px;
+        }
+        .guess-match{
+            color: white;
+        }
+    {% endif %}
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex flex-column">
+        <h1 class="mt-3 align-self-center">The Great Numbers Game</h1>
+        <h3 class="mt-3 mb-3 align-self-center">Guess a Number between 1 and 100</h3>
+        {% if session['result'] == 'High' %}
+            <span class="red-back mb-3 align-self-center guess-high d-flex align-items-center justify-content-center">
+                <h2 class="guess-high">HIGH!</h2>
+            </span>
+        {% elif session['result'] == 'Low' %}
+            <span class="blue-back mb-3 align-self-center guess-high d-flex align-items-center justify-content-center">
+                <h2 class="guess-low">LOW!</h2>
+            </span>
+        {% elif session['result'] == 'Match' %}
+            <div class="green-back mb-3 align-self-center guess-high d-flex flex-column align-items-center justify-content-center">
+                <h2 class="guess-match">MATCH!</h2>
+                <form action="/again">
+                    <input type="submit" value="Play Again">
+                </form>
+            </div>
+        {% endif %}
+        <form action="/check" method="post" class="d-flex flex-column align-self-center">
+            <label for="guess" class="form-label align-self-center">Pick from 1-100</label>
+            <input type="text" class="form-control mb-2" id="guess" name="user_guess" placeholder="guess a number">
+            <input type="submit" value="Guess">
+        </form>
+    </div>
+</body>
+
+</html>
